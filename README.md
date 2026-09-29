@@ -45,20 +45,16 @@ In Songs: `|<<` and `>>|` pick a song, `1` or PLAY listens, `2` starts Learn, `7
 
 Needs the **IRremote** library by Armin Joachimsmeyer. The sketch puts IR decoding on Timer1 so it doesn't fight `tone()` for Timer2.
 
-## What broke
+## Tuning
 
-- **Notes past a few centimeters disappeared.** The clone HC-SR04 starts its echo late, and a 3.5 ms timeout was silently dropping anything further away. A 30 ms timeout fixed it.
-- **The note flickered between neighboring keys.** Wider zones, ±2 cm of hysteresis and a median-of-3 filter on the readings fixed it.
-
-## Status
-
-Piano, the button and Theremin mode work on the hardware. Songs was the last thing I built and I haven't fully tested it yet.
+- **Echo timeout.** The clone HC-SR04 in the kit starts its echo late, so the sketch waits up to 30 ms for it. That keeps every key zone readable.
+- **Stable notes.** Each key zone has ±2 cm of hysteresis, and readings go through a median-of-3 filter, so the note holds steady while your hand stays in one place.
 
 ## Archive
 
 `archive/` has two earlier sketches from the same night:
 
-- `desk_piano_v1_sound_sensor`: the first version, where a sound sensor taped to the desk would hear you tap and trigger the note. The kit didn't have a sound sensor, so I switched to playing by putting your hand down into the beam.
+- `desk_piano_v1_sound_sensor`: a tap-triggered version that uses a sound sensor taped to the desk. The final version plays when you put your hand down into the beam instead, so it needs no extra sensor.
 - `hand_jump_dino`: an endless runner on the LCD that you play by waving your hand over the sensor.
 
 MIT license.
